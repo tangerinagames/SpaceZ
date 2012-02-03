@@ -4,6 +4,8 @@ set(PROJECT_NAME SpaceZ)
 
 Project(${PROJECT_NAME})
 
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
 set(
     SOURCES
     src/main.cpp
