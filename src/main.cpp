@@ -2,6 +2,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include "Ship.h"
 
 using namespace std;
 
@@ -9,7 +10,10 @@ using namespace std;
 #define HEIGHT 480
 #define FPS 60
 
+enum KEYS {KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN};
+
 int main(int argc, char **argv) {
+    bool key[4] = {false, false, false, false};
 
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_TIMER *timer = NULL;
@@ -44,19 +48,60 @@ int main(int argc, char **argv) {
 
     al_start_timer(timer);
 
+    Ship ship;
+
     while (!doexit) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
 
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             redraw = true;
+            if (key[KEY_UP]) ship.move(0, -4);
+            if (key[KEY_DOWN]) ship.move(0, 4);
+            if (key[KEY_LEFT]) {
+                ship.move(-4, 0);
+                ship.left();
+            }
+            if (key[KEY_RIGHT]) {
+                ship.move(4, 0);
+                ship.right();
+            }
+            
         } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             doexit = true;
         } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
             switch (ev.keyboard.keycode) {
-                case ALLEGRO_KEY_ESCAPE:
-                    doexit = true;
+                case ALLEGRO_KEY_UP:
+                    key[KEY_UP] = true;
                     break;
+                case ALLEGRO_KEY_DOWN:
+                    key[KEY_DOWN] = true;
+                    break;
+                case ALLEGRO_KEY_LEFT: 
+                    key[KEY_LEFT] = true;
+                    break;
+                case ALLEGRO_KEY_RIGHT:
+                    key[KEY_RIGHT] = true;
+                    break;
+            }
+        } else if (ev.type == ALLEGRO_EVENT_KEY_UP) {
+            ship.center();
+            switch(ev.keyboard.keycode) {
+                case ALLEGRO_KEY_UP:
+                   key[KEY_UP] = false;
+                   break;
+                case ALLEGRO_KEY_DOWN:
+                   key[KEY_DOWN] = false;
+                   break;
+                case ALLEGRO_KEY_LEFT: 
+                   key[KEY_LEFT] = false;
+                   break;
+                case ALLEGRO_KEY_RIGHT:
+                   key[KEY_RIGHT] = false;
+                   break;
+                case ALLEGRO_KEY_ESCAPE:
+                   doexit = true;
+                   break;
             }
         }
 
@@ -64,6 +109,7 @@ int main(int argc, char **argv) {
             redraw = false;
             al_clear_to_color(white);
             al_draw_scaled_bitmap(bg, 0, 0, bg_width, bg_height, 0, 0, WIDTH, HEIGHT, 0);
+            ship.draw();
             al_draw_text(font, white, 20, 20, ALLEGRO_ALIGN_LEFT, "SpaceZ");
             al_flip_display();
         }
