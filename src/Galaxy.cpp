@@ -1,8 +1,6 @@
 #include "Galaxy.h"
 #include <cstdlib>
 
-#define foreach(i, l) for 
-
 Galaxy::Galaxy() {
     display_width = al_get_display_width(al_get_current_display());
     background = al_load_bitmap("res/images/space.png"); 
