@@ -10,6 +10,7 @@ set(
     SOURCES
     src/main.cpp
     src/Ship.cpp
+    src/Galaxy.cpp
 )
 
 Find_Package(Allegro REQUIRED)

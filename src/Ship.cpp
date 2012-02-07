@@ -1,12 +1,7 @@
 #include "Ship.h"
-#include <iostream>
 
 #define WIDTH 78
 #define HEIGHT 72
-
-#define LEFT 0
-#define CENTER 1
-#define RIGHT 2
 
 Ship::Ship(): current_sprite(CENTER), x(100), y(100) {
     ALLEGRO_BITMAP *bitmap = al_load_bitmap("res/images/spaceship.png");

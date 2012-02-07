@@ -6,6 +6,7 @@
 
 class Ship {
 private:
+    enum { LEFT, CENTER, RIGHT };
     ALLEGRO_BITMAP *sprites[SPRITES];
     int current_sprite;
     int x, y;
