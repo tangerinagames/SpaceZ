@@ -12,6 +12,7 @@ private:
     int x, y;
 public:
     Ship();
+    ~Ship();
     void draw();
     void move(int x, int y);
     void left();
@@ -20,4 +21,3 @@ public:
 };
 
 #endif
- 
